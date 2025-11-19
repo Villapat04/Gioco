@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trova l'Impostore</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;900&display=swap" rel="stylesheet">
+
+    <style>
+        /* STILI STANDARD */
+        body { font-family: 'Nunito', sans-serif; text-align: center; padding: 20px; background-color: #ffffff; color: #333; margin: 0; transition: background-color 0.5s ease; }
+        h1 { color: #2c3e50; margin-bottom: 10px; font-weight: 900; font-size: 42px; text-transform: uppercase; letter-spacing: 1px; text-shadow: 2px 2px 0px #eee; }
+        h2 { color: #555; font-weight: 600; }
+
+        button { padding: 18px 30px; font-size: 18px; border: none; border-radius: 50px; cursor: pointer; margin: 15px auto; width: 85%; max-width: 320px; display: block; color: white; font-weight: 800; letter-spacing: 0.5px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); font-family: 'Nunito', sans-serif; transition: transform 0.1s; }
+        button:active { transform: scale(0.95); }
+        button.primary { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        button.secondary { background: linear-gradient(135deg, #ff0844 0%, #ffb199 100%); }
+        button.clash { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); border: 2px solid #fff; text-shadow: 0 1px 2px rgba(0,0,0,0.2); }
+        button.neutral { background: #e0e0e0; color: #555; width: auto; padding: 10px 25px; font-size: 16px; }
+        button.start-btn { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); font-size: 22px; }
+        button.play-again-btn { background: linear-gradient(135deg, #007bff 0%, #00bfff 100%); font-size: 20px; margin-top: 30px; box-shadow: 0 6px 20px rgba(0,123,255,0.4); }
+
+        .input-group { margin: 40px auto; text-align: center; }
+        input[type="text"] { padding: 15px; font-size: 20px; border-radius: 15px; border: 2px solid #eee; background-color: #f9f9f9; color: #333; text-align: center; width: 80%; max-width: 280px; outline: none; font-family: 'Nunito', sans-serif; font-weight: 600; }
+        #codice_input { text-transform: uppercase; letter-spacing: 5px; font-weight: 900; font-size: 28px; }
+        
+        #lista_giocatori { list-style: none; padding: 0; max-width: 320px; margin: 20px auto; }
+        #lista_giocatori li { padding: 15px; margin-bottom: 10px; background: white; border-radius: 12px; border: 1px solid #eee; box-shadow: 0 2px 5px rgba(0,0,0,0.05); font-weight: 700; }
+        
+        #codice_lobby { font-size: 60px; letter-spacing: 8px; margin: 10px 0 30px 0; color: #333; background: #f0f2f5; display: inline-block; padding: 10px 30px; border-radius: 20px; border: 2px dashed #ccc; }
+
+        #opzione_infiltrato { margin: 20px auto; padding: 15px; background: #fff9c4; border-radius: 15px; max-width: 300px; display: flex; align-items: center; justify-content: space-between; border: 2px solid #fbc02d; cursor: pointer; opacity: 0.6; transition: opacity 0.3s; }
+        #opzione_infiltrato.attivo { opacity: 1; background: #fff176; box-shadow: 0 0 15px rgba(251, 192, 45, 0.5); }
+        .toggle-label { font-weight: bold; color: #f57f17; }
+        .toggle-status { font-size: 24px; }
+
+        .gioco-attivo h1#main_title { display: none; }
+        #contenitore_parola { margin-top: 2vh; }
+        #testo_principale { font-size: 55px; font-weight: 900; color: white; text-transform: uppercase; text-shadow: 0 4px 10px rgba(0,0,0,0.3); margin: 0; line-height: 1.1; }
+        #testo_secondario { font-size: 20px; color: rgba(255,255,255,0.9); margin-top: 10px; text-transform: uppercase; letter-spacing: 2px; font-weight: 700; }
+        
+        #img_ruolo { width: 150px; height: 150px; object-fit: contain; background-color: white; padding: 15px; border-radius: 50%; border: 5px solid rgba(255,255,255,0.5); margin: 0 auto 15px auto; display: none; box-shadow: 0 15px 30px rgba(0,0,0,0.4); }
+
+        #box_inizia_tu { background-color: #ffcc00; color: #000; padding: 15px; border-radius: 15px; font-weight: 900; font-size: 24px; text-transform: uppercase; display: none; margin: 20px auto; max-width: 280px; box-shadow: 0 0 20px rgba(255, 204, 0, 0.6); animation: pulsare 1.5s infinite; }
+        @keyframes pulsare { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+
+        #tag_modalita { font-size: 14px; text-transform: uppercase; letter-spacing: 1px; margin-top: -10px; margin-bottom: 20px; color: #888; font-weight: bold; }
+
+        #menu_classica, #menu_modalita, #schermata_crea, #menu_unisciti, #schermata_gioco { display: none; }
+        #schermata_principale { display: block; }
+    </style>
+    <link rel="manifest" href="/manifest.json">
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/service-worker.js')
+        .then(registration => {
+          console.log('ServiceWorker registered: ', registration);
+        })
+        .catch(registrationError => {
+          console.log('ServiceWorker registration failed: ', registrationError);
+        });
+    });
+  }
+</script>
+</head>
+<body>
+    
+    <h1 id="main_title">Trova l'Impostore</h1>
+    
+    <div id="schermata_principale">
+        <div class="input-group">
+            <input type="text" id="input_nome" placeholder="Scrivi il tuo nome..." maxlength="12">
+        </div>
+        <button onclick="vaiAlMenuDiGioco('menu_classica', 'classica')" class="primary">Partita Classica</button>
+        <button onclick="vaiAlMenuDiGioco('menu_modalita', 'clash')" class="secondary">Modalità Speciale</button>
+    </div>
+
+    <div id="menu_classica">
+        <h2 style="margin-bottom: 30px;">Partita Classica</h2>
+        <button onclick="creaLobby('classica')" class="primary">Crea Nuova Lobby</button>
+        <button onclick="mostraSchermata('menu_unisciti')" class="secondary">Entra con Codice</button>
+        <br>
+        <button onclick="mostraSchermata('schermata_principale')" class="neutral">Indietro</button>
+    </div>
+    
+    <div id="menu_modalita">
+        <h2 style="color:#ff0844">Modalità Clash Royale</h2>
+        <p>Gioca con le carte di Clash!</p>
+        <button onclick="creaLobby('clash')" class="clash">Crea Lobby Clash</button>
+        <button onclick="mostraSchermata('menu_unisciti')" class="secondary">Entra con Codice</button>
+        <hr style="border-color: #eee; width: 50%; margin: 40px auto;">
+        <button onclick="mostraSchermata('schermata_principale')" class="neutral">Indietro</button>
+    </div>
+
+    <div id="schermata_crea">
+        <p style="color:#aaa; font-size: 14px; text-transform:uppercase; letter-spacing:1px;">Codice Stanza</p>
+        <div id="codice_lobby">...</div>
+        <div id="tag_modalita">MODALITÀ: CLASSICA</div>
+        <div id="opzione_infiltrato" onclick="toggleInfiltrato()">
+            <span class="toggle-label">🕵️ Ruolo Infiltrato</span>
+            <span class="toggle-status" id="stato_infiltrato">❌</span>
+        </div>
+        <ul id="lista_giocatori"></ul>
+        <div style="height: 20px;"></div>
+        <button id="btn_inizia" onclick="iniziaPartita()" class="start-btn">INIZIA PARTITA</button>
+        <button onclick="esciDallaLobby()" class="neutral">Annulla</button>
+    </div>
+    
+    <div id="menu_unisciti">
+        <h2>Inserisci Codice</h2>
+        <div class="input-group">
+            <input type="text" id="codice_input" placeholder="ABCD" maxlength="4">
+        </div>
+        <button onclick="uniscitiAllaLobby()" class="primary">ENTRA</button>
+        <button onclick="tornaAlMenuPrecedente()" class="neutral">Indietro</button>
+    </div>
+
+    <div id="schermata_gioco">
+        <div id="contenitore_parola">
+            <img id="img_ruolo" src="" alt="Ruolo">
+            <div id="box_inizia_tu">👉 INIZI TU! 👈</div>
+            <p id="testo_secondario">...</p>
+            <h1 id="testo_principale" style="color: white; display: block;">...</h1>
+        </div>
+        <br><br>
+        <button id="btn_gioca_ancora" onclick="resetLobby()" class="play-again-btn" style="display:none;">Gioca Ancora</button>
+        <button onclick="location.reload()" style="background: rgba(255,255,255,0.2); border: 1px solid white; color: white;">Esci dalla Lobby</button>
+    </div>
+    
+    <script src="/socket.io/socket.io.js"></script> 
+    <script>
+        const socket = io(); 
+        let codiceLobbyAttuale = "";
+        let isHost = false; 
+        let modalitaSelezionata = 'classica'; // Variabile per ricordare la scelta
+
+        function mostraSchermata(id) {
+            document.querySelectorAll('body > div').forEach(div => div.style.display = 'none');
+            document.getElementById(id).style.display = 'block';
+            const titolo = document.getElementById('main_title');
+            if (id === 'schermata_gioco') { titolo.style.display = 'none'; } 
+            else { titolo.style.display = 'block'; }
+        }
+
+        function aggiornaLista(nomi) {
+            const lista = document.getElementById('lista_giocatori');
+            lista.innerHTML = '';
+            nomi.forEach(nome => {
+                lista.innerHTML += `<li><span style="margin-right:10px;">👤</span> ${nome}</li>`;
+            });
+        }
+
+        // SALVA LA MODALITÀ QUANDO ENTRI NEL MENU
+        function vaiAlMenuDiGioco(menuDestinazione, modalita) {
+            const nomeInput = document.getElementById('input_nome').value.trim();
+            if (nomeInput === "") { alert("Scrivi il tuo nome!"); return; }
+            
+            socket.emit('imposta_nome', nomeInput);
+            
+            modalitaSelezionata = modalita; // Salva 'classica' o 'clash'
+            mostraSchermata(menuDestinazione);
+        }
+        
+        function tornaAlMenuPrecedente() {
+            if(modalitaSelezionata === 'clash') {
+                mostraSchermata('menu_modalita');
+            } else {
+                mostraSchermata('menu_classica');
+            }
+        }
+
+        function toggleInfiltrato() {
+            if (isHost && codiceLobbyAttuale) {
+                socket.emit('toggle_infiltrato', codiceLobbyAttuale);
+            }
+        }
+        
+        function esciDallaLobby() { location.reload(); }
+
+        socket.on('aggiorna_impostazioni', (dati) => {
+            const box = document.getElementById('opzione_infiltrato');
+            const status = document.getElementById('stato_infiltrato');
+            if (dati.infiltratoAbilitato) { box.classList.add('attivo'); status.innerText = '✅'; }
+            else { box.classList.remove('attivo'); status.innerText = '❌'; }
+        });
+
+        socket.on('benvenuto', () => {});
+
+        function creaLobby(tipo) {
+            mostraSchermata('schermata_crea'); 
+            document.getElementById('codice_lobby').innerText = '...';
+            socket.emit('create_lobby', tipo);
+        }
+
+        socket.on('lobby_creata', (dati) => {
+            if (dati.success) {
+                codiceLobbyAttuale = dati.codice;
+                isHost = dati.isHost; 
+                document.getElementById('codice_lobby').innerText = dati.codice;
+                document.getElementById('tag_modalita').innerText = "MODALITÀ: " + dati.modalita.toUpperCase();
+                document.getElementById('btn_inizia').style.display = isHost ? 'block' : 'none';
+                document.getElementById('opzione_infiltrato').style.display = isHost ? 'flex' : 'none';
+                aggiornaLista(dati.listaNomi);
+                document.getElementById('opzione_infiltrato').classList.remove('attivo');
+                document.getElementById('stato_infiltrato').innerText = '❌';
+            }
+        });
+
+        function uniscitiAllaLobby() {
+            const codice = document.getElementById('codice_input').value.toUpperCase();
+            if (codice.length === 4) { 
+                // INVIA ANCHE LA MODALITÀ CHE L'UTENTE SI ASPETTA
+                socket.emit('join_lobby', { 
+                    codice: codice,
+                    modalitaRichiesta: modalitaSelezionata 
+                }); 
+            } 
+            else { alert("Codice di 4 lettere richiesto"); }
+        }
+
+        socket.on('lobby_unita', (dati) => {
+            if (dati.success) {
+                codiceLobbyAttuale = dati.codice;
+                isHost = dati.isHost; 
+                mostraSchermata('schermata_crea');
+                document.getElementById('btn_inizia').style.display = isHost ? 'block' : 'none'; 
+                document.getElementById('opzione_infiltrato').style.display = isHost ? 'flex' : 'none';
+                document.getElementById('codice_lobby').innerText = dati.codice;
+                document.getElementById('tag_modalita').innerText = "MODALITÀ: " + dati.modalita.toUpperCase();
+                aggiornaLista(dati.listaNomi);
+                const box = document.getElementById('opzione_infiltrato');
+                const status = document.getElementById('stato_infiltrato');
+                if(dati.infiltratoAbilitato) { box.classList.add('attivo'); status.innerText = '✅'; }
+                else { box.classList.remove('attivo'); status.innerText = '❌'; }
+            } else {
+                alert(dati.messaggio);
+            }
+        });
+
+        socket.on('giocatore_entrato', (dati) => {
+            aggiornaLista(dati.listaNomi);
+        });
+
+        function iniziaPartita() {
+            if(codiceLobbyAttuale) {
+                socket.emit('start_game', codiceLobbyAttuale);
+            }
+        }
+        
+        socket.on('errore', (dati) => { alert("Errore: " + dati.messaggio); });
+
+        socket.on('partita_iniziata', (dati) => {
+            mostraSchermata('schermata_gioco');
+            const principale = document.getElementById('testo_principale');
+            const secondario = document.getElementById('testo_secondario');
+            const immagine = document.getElementById('img_ruolo');
+            const boxInizia = document.getElementById('box_inizia_tu');
+            const btnGiocaAncora = document.getElementById('btn_gioca_ancora');
+
+            principale.innerText = dati.testoPrincipale;
+            secondario.innerText = dati.testoSecondario;
+            document.body.style.backgroundColor = dati.colore;
+            immagine.style.display = "inline-block"; 
+            
+            if (dati.tipoLogo === "impostore") {
+                immagine.src = "/logo_imposter.png"; 
+                immagine.style.border = "6px solid rgba(0,0,0,0.3)"; 
+            } else if (dati.tipoLogo === "infiltrato") {
+                immagine.src = "/logo_infiltrato.png"; 
+                immagine.style.border = "6px solid rgba(255,255,255,0.6)";
+            } else {
+                immagine.src = "/logo_detective.png"; 
+                immagine.style.border = "6px solid rgba(255,255,255,0.6)"; 
+            }
+
+            if (dati.iniziaTu === true) { boxInizia.style.display = 'block'; } 
+            else { boxInizia.style.display = 'none'; }
+            
+            btnGiocaAncora.style.display = isHost ? 'block' : 'none';
+        });
+        
+        function resetLobby() {
+            if (codiceLobbyAttuale && isHost) {
+                socket.emit('reset_lobby', codiceLobbyAttuale);
+            }
+        }
+
+        socket.on('torna_alla_lobby', (dati) => {
+            mostraSchermata('schermata_crea');
+            document.body.style.backgroundColor = '#ffffff';
+            aggiornaLista(dati.listaNomi);
+            document.getElementById('tag_modalita').innerText = "MODALITÀ: " + dati.modalita.toUpperCase();
+            const box = document.getElementById('opzione_infiltrato');
+            const status = document.getElementById('stato_infiltrato');
+            if(dati.infiltratoAbilitato) { box.classList.add('attivo'); status.innerText = '✅'; }
+            else { box.classList.remove('attivo'); status.innerText = '❌'; }
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            mostraSchermata('schermata_principale');
+        });
+    </script> 
+</body>
+</html>
