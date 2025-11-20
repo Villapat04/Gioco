@@ -26,6 +26,8 @@ try {
 }
 
 let stanze = {}; 
+// NEW: Mappatura inversa per sapere a quale stanza appartiene un giocatore
+let giocatoriConnessi = {}; // { socketId: 'CODICELOBBY' }
 
 function generaNomeCasuale() {
     const nomi = ["Squalo", "Tigre", "Drago", "Ninja", "Fantasma", "Alieno", "Pirata", "Orso", "Falco"];
@@ -48,183 +50,199 @@ function generaCodice() {
 app.get('/', (req, res) => { res.sendFile(__dirname + '/index.html'); });
 
 io.on('connection', (socket) => {
-  socket.data.nome = generaNomeCasuale();
-  
-  socket.on('imposta_nome', (nuovoNome) => {
-      if(nuovoNome && nuovoNome.trim().length > 0) { socket.data.nome = nuovoNome.trim(); }
-  });
-
-  socket.on('create_lobby', (tipoPartita) => {
-    const nuovoCodice = generaCodice();
-    const nomeHost = socket.data.nome;
-    const modalita = tipoPartita || 'classica';
+    socket.data.nome = generaNomeCasuale();
     
-    stanze[nuovoCodice] = {
-        hostId: socket.id,
-        codice: nuovoCodice,
-        giocatori: [{ id: socket.id, nome: nomeHost }],
-        status: 'waiting',
-        infiltratoAbilitato: false,
-        modalita: modalita
-    };
-    
-    socket.join(nuovoCodice);
-
-    socket.emit('lobby_creata', {
-        success: true,
-        codice: nuovoCodice,
-        listaNomi: [nomeHost],
-        isHost: true,
-        infiltratoAbilitato: false,
-        modalita: modalita
+    socket.on('imposta_nome', (nuovoNome) => {
+        if(nuovoNome && nuovoNome.trim().length > 0) { socket.data.nome = nuovoNome.trim(); }
     });
-  });
-  
-  socket.on('toggle_infiltrato', (codiceLobby) => {
-      const stanza = stanze[codiceLobby];
-      if(stanza && stanza.hostId === socket.id) {
-          stanza.infiltratoAbilitato = !stanza.infiltratoAbilitato;
-          io.to(codiceLobby).emit('aggiorna_impostazioni', { infiltratoAbilitato: stanza.infiltratoAbilitato });
-      }
-  });
 
-  // --- LOGICA UNIONE AGGIORNATA (CONTROLLO MODALITÀ) ---
-  socket.on('join_lobby', (dati) => {
-      const codice = dati.codice;
-      const modalitaUtente = dati.modalitaRichiesta; // La modalità scelta dall'utente (classica/clash)
-      const nomeOspite = socket.data.nome; 
-      
-      // 1. Esiste la stanza?
-      if (!stanze[codice]) {
-          socket.emit('lobby_unita', { success: false, messaggio: 'Codice non trovato!' });
-          return;
-      }
-      
-      // 2. La modalità corrisponde? (NUOVO CONTROLLO)
-      if (stanze[codice].modalita !== modalitaUtente) {
-          const tipoCorretto = stanze[codice].modalita.toUpperCase();
-          socket.emit('lobby_unita', { 
-              success: false, 
-              messaggio: `Errore! Questa è una lobby ${tipoCorretto}. Torna indietro e scegli la modalità giusta.` 
-          });
-          return;
-      }
+    socket.on('create_lobby', (tipoPartita) => {
+        const nuovoCodice = generaCodice();
+        const nomeHost = socket.data.nome;
+        const modalita = tipoPartita || 'classica';
+        
+        stanze[nuovoCodice] = {
+            hostId: socket.id,
+            codice: nuovoCodice,
+            giocatori: [{ id: socket.id, nome: nomeHost }],
+            status: 'waiting',
+            infiltratoAbilitato: false,
+            modalita: modalita
+        };
+        
+        socket.join(nuovoCodice);
+        // NEW: Registra la stanza per il giocatore host
+        giocatoriConnessi[socket.id] = nuovoCodice;
 
-      // 3. La partita è già iniziata?
-      if (stanze[codice].status === 'playing') {
-          socket.emit('lobby_unita', { success: false, messaggio: 'Partita già in corso!' });
-          return;
-      }
+        socket.emit('lobby_creata', {
+            success: true,
+            codice: nuovoCodice,
+            listaNomi: [nomeHost],
+            isHost: true,
+            infiltratoAbilitato: false,
+            modalita: modalita
+        });
+    });
+    
+    socket.on('toggle_infiltrato', (codiceLobby) => {
+        const stanza = stanze[codiceLobby];
+        if(stanza && stanza.hostId === socket.id) {
+            stanza.infiltratoAbilitato = !stanza.infiltratoAbilitato;
+            io.to(codiceLobby).emit('aggiorna_impostazioni', { infiltratoAbilitato: stanza.infiltratoAbilitato });
+        }
+    });
 
-      const nuovoGiocatore = { id: socket.id, nome: nomeOspite };
-      stanze[codice].giocatori.push(nuovoGiocatore);
-      
-      socket.join(codice);
+    // --- LOGICA UNIONE AGGIORNATA (CONTROLLO MODALITÀ) ---
+    socket.on('join_lobby', (dati) => {
+        const codice = dati.codice;
+        const modalitaUtente = dati.modalitaRichiesta; 
+        const nomeOspite = socket.data.nome; 
+        
+        // 1. Esiste la stanza?
+        if (!stanze[codice]) {
+            socket.emit('lobby_unita', { success: false, messaggio: 'Codice non trovato!' });
+            return;
+        }
+        
+        // 2. La modalità corrisponde?
+        if (stanze[codice].modalita !== modalitaUtente) {
+            const tipoCorretto = stanze[codice].modalita.toUpperCase();
+            socket.emit('lobby_unita', { 
+                success: false, 
+                messaggio: `Errore! Questa è una lobby ${tipoCorretto}. Torna indietro e scegli la modalità giusta.` 
+            });
+            return;
+        }
 
-      const listaGiocatori = stanze[codice].giocatori.map(p => p.nome);
-      
-      socket.emit('lobby_unita', { 
-          success: true, 
-          codice: codice, 
-          listaNomi: listaGiocatori,
-          isHost: false,
-          infiltratoAbilitato: stanze[codice].infiltratoAbilitato,
-          modalita: stanze[codice].modalita
-      });
+        // 3. La partita è già iniziata?
+        if (stanze[codice].status === 'playing') {
+            socket.emit('lobby_unita', { success: false, messaggio: 'Partita già in corso!' });
+            return;
+        }
 
-      socket.to(codice).emit('giocatore_entrato', { listaNomi: listaGiocatori });
-  });
+        const nuovoGiocatore = { id: socket.id, nome: nomeOspite };
+        stanze[codice].giocatori.push(nuovoGiocatore);
+        
+        socket.join(codice);
+        // NEW: Registra la stanza anche per il giocatore che si unisce
+        giocatoriConnessi[socket.id] = codice;
 
-  socket.on('start_game', (codiceLobby) => {
-      const stanza = stanze[codiceLobby];
-      if (!stanza || stanza.hostId !== socket.id) return;
+        const listaGiocatori = stanze[codice].giocatori.map(p => p.nome);
+        
+        socket.emit('lobby_unita', { 
+            success: true, 
+            codice: codice, 
+            listaNomi: listaGiocatori,
+            isHost: false,
+            infiltratoAbilitato: stanze[codice].infiltratoAbilitato,
+            modalita: stanze[codice].modalita
+        });
 
-      const minGiocatori = stanza.infiltratoAbilitato ? 3 : 2; 
-      if (stanza.giocatori.length < minGiocatori) return;
-      
-      stanza.status = 'playing';
+        socket.to(codice).emit('giocatore_entrato', { listaNomi: listaGiocatori });
+    });
 
-      let databaseScelto = dbClassico;
-      if (stanza.modalita === 'clash') databaseScelto = dbClash;
+    socket.on('start_game', (codiceLobby) => {
+        const stanza = stanze[codiceLobby];
+        if (!stanza || stanza.hostId !== socket.id) return;
 
-      const carta = databaseScelto[Math.floor(Math.random() * databaseScelto.length)];
-      const parolaCivile = carta.parola;
-      const parolaInfiltrato = carta.infiltrato[Math.floor(Math.random() * carta.infiltrato.length)];
+        const minGiocatori = stanza.infiltratoAbilitato ? 3 : 2; 
+        if (stanza.giocatori.length < minGiocatori) return;
+        
+        stanza.status = 'playing';
 
-      let indici = [...Array(stanza.giocatori.length).keys()]; 
-      const randImp = Math.floor(Math.random() * indici.length);
-      const indiceImpostore = indici.splice(randImp, 1)[0];
-      
-      let indiceInfiltrato = -1;
-      if (stanza.infiltratoAbilitato && indici.length > 0) {
-          const randInf = Math.floor(Math.random() * indici.length);
-          indiceInfiltrato = indici.splice(randInf, 1)[0];
-      }
+        let databaseScelto = dbClassico;
+        if (stanza.modalita === 'clash') databaseScelto = dbClash;
 
-      let biglietti = [];
-      stanza.giocatori.forEach((g, i) => {
-          if (i === indiceImpostore) biglietti.push(i);
-          else if (i === indiceInfiltrato) for(let k=0; k<3; k++) biglietti.push(i);
-          else for(let k=0; k<5; k++) biglietti.push(i);
-      });
-      const indiceChiInizia = biglietti[Math.floor(Math.random() * biglietti.length)];
+        const carta = databaseScelto[Math.floor(Math.random() * databaseScelto.length)];
+        const parolaCivile = carta.parola;
+        const parolaInfiltrato = carta.infiltrato[Math.floor(Math.random() * carta.infiltrato.length)];
 
-      stanza.giocatori.forEach((giocatore, index) => {
-          const toccaATe = (index === indiceChiInizia);
-          let datiPartita = { iniziaTu: toccaATe };
+        let indici = [...Array(stanza.giocatori.length).keys()]; 
+        const randImp = Math.floor(Math.random() * indici.length);
+        const indiceImpostore = indici.splice(randImp, 1)[0];
+        
+        let indiceInfiltrato = -1;
+        if (stanza.infiltratoAbilitato && indici.length > 0) {
+            const randInf = Math.floor(Math.random() * indici.length);
+            indiceInfiltrato = indici.splice(randInf, 1)[0];
+        }
 
-          if (index === indiceImpostore) {
-              datiPartita.ruolo = "IMPOSTORE";
-              datiPartita.testoPrincipale = "SEI L'IMPOSTORE";
-              datiPartita.testoSecondario = "Non farti scoprire!";
-              datiPartita.colore = "#d32f2f"; 
-              datiPartita.tipoLogo = "impostore"; 
-          } else if (index === indiceInfiltrato) {
-              datiPartita.ruolo = "INFILTRATO";
-              datiPartita.testoPrincipale = parolaInfiltrato;
-              datiPartita.testoSecondario = "Parola dell'Infiltrato";
-              datiPartita.colore = "#fbc02d"; 
-              datiPartita.tipoLogo = "infiltrato"; 
-          } else {
-              datiPartita.ruolo = "CIVILE";
-              datiPartita.testoPrincipale = parolaCivile;
-              datiPartita.testoSecondario = "Parola Segreta";
-              datiPartita.colore = "#2e7d32"; 
-              datiPartita.tipoLogo = "detective"; 
-          }
-          io.to(giocatore.id).emit('partita_iniziata', datiPartita);
-      });
-  });
+        let biglietti = [];
+        stanza.giocatori.forEach((g, i) => {
+            if (i === indiceImpostore) biglietti.push(i);
+            else if (i === indiceInfiltrato) for(let k=0; k<3; k++) biglietti.push(i);
+            else for(let k=0; k<5; k++) biglietti.push(i);
+        });
+        const indiceChiInizia = biglietti[Math.floor(Math.random() * biglietti.length)];
 
-  socket.on('reset_lobby', (codiceLobby) => {
-      const stanza = stanze[codiceLobby];
-      if (stanza && stanza.hostId === socket.id) {
-          stanza.status = 'waiting';
-          io.to(codiceLobby).emit('torna_alla_lobby', {
-              codice: codiceLobby,
-              listaNomi: stanza.giocatori.map(p => p.nome),
-              infiltratoAbilitato: stanza.infiltratoAbilitato,
-              modalita: stanza.modalita
-          });
-      }
-  });
+        stanza.giocatori.forEach((giocatore, index) => {
+            const toccaATe = (index === indiceChiInizia);
+            let datiPartita = { iniziaTu: toccaATe };
 
-  socket.on('disconnect', () => {
-      for (const codice in stanze) {
-          let stanza = stanze[codice];
-          const playerIndex = stanza.giocatori.findIndex(p => p.id === socket.id);
-          if (playerIndex !== -1) {
-              stanza.giocatori.splice(playerIndex, 1);
-              if (stanza.giocatori.length === 0) delete stanze[codice];
-              else io.to(codice).emit('giocatore_entrato', { listaNomi: stanza.giocatori.map(p => p.nome) });
-              break;
-          }
-      }
-  });
+            if (index === indiceImpostore) {
+                datiPartita.ruolo = "IMPOSTORE";
+                datiPartita.testoPrincipale = "SEI L'IMPOSTORE";
+                datiPartita.testoSecondario = "Non farti scoprire!";
+                datiPartita.colore = "#d32f2f"; 
+                datiPartita.tipoLogo = "impostore"; 
+            } else if (index === indiceInfiltrato) {
+                datiPartita.ruolo = "INFILTRATO";
+                datiPartita.testoPrincipale = parolaInfiltrato;
+                datiPartita.testoSecondario = "Parola dell'Infiltrato";
+                datiPartita.colore = "#fbc02d"; 
+                datiPartita.tipoLogo = "infiltrato"; 
+            } else {
+                datiPartita.ruolo = "CIVILE";
+                datiPartita.testoPrincipale = parolaCivile;
+                datiPartita.testoSecondario = "Parola Segreta";
+                datiPartita.colore = "#2e7d32"; 
+                datiPartita.tipoLogo = "detective"; 
+            }
+            io.to(giocatore.id).emit('partita_iniziata', datiPartita);
+        });
+    });
+
+    socket.on('reset_lobby', (codiceLobby) => {
+        const stanza = stanze[codiceLobby];
+        if (stanza && stanza.hostId === socket.id) {
+            stanza.status = 'waiting';
+            io.to(codiceLobby).emit('torna_alla_lobby', {
+                codice: codiceLobby,
+                listaNomi: stanza.giocatori.map(p => p.nome),
+                infiltratoAbilitato: stanza.infiltratoAbilitato,
+                modalita: stanza.modalita
+            });
+        }
+    });
+
+    socket.on('disconnect', () => {
+        // NEW: Ottiene il codice della stanza direttamente
+        const codiceLobbyDelGiocatore = giocatoriConnessi[socket.id];
+        if (!codiceLobbyDelGiocatore) {
+            // Se non trovo il giocatore, significa che non era in una lobby, o si è disconnesso presto.
+            return;
+        }
+
+        let stanza = stanze[codiceLobbyDelGiocatore];
+        if (stanza) {
+            const playerIndex = stanza.giocatori.findIndex(p => p.id === socket.id);
+            if (playerIndex !== -1) {
+                stanza.giocatori.splice(playerIndex, 1);
+                // NEW: Rimuovi il giocatore dalla mappatura inversa
+                delete giocatoriConnessi[socket.id]; 
+
+                if (stanza.giocatori.length === 0) {
+                    delete stanze[codiceLobbyDelGiocatore];
+                } else {
+                    io.to(codiceLobbyDelGiocatore).emit('giocatore_entrato', { listaNomi: stanza.giocatori.map(p => p.nome) });
+                }
+            }
+        }
+    });
 });
 
 // Usa la porta che ci dà il server online, oppure la 3000 se siamo sul pc
 const PORT = process.env.PORT || 3000; 
 server.listen(PORT, () => {
-  console.log(`SERVER ATTIVO! Porta ${PORT}`);
+    console.log(`SERVER ATTIVO! Porta ${PORT}`);
 });
