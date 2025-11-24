@@ -1,252 +1,212 @@
 [
-  {
-    "id": 1,
-    "parola": "Cane",
-    "infiltrato": ["Lupo", "Volpe", "Iena", "Coyote"]
-  },
-  {
-    "id": 2,
-    "parola": "Gatto",
-    "infiltrato": ["Tigre", "Leone", "Pantera", "Ghepardo"]
-  },
-  {
-    "id": 3,
-    "parola": "Pizza",
-    "infiltrato": ["Focaccia", "Calzone", "Piadina", "Pane"]
-  },
-  {
-    "id": 4,
-    "parola": "Pasta",
-    "infiltrato": ["Riso", "Gnocchi", "Ravioli", "Lasagna"]
-  },
-  {
-    "id": 5,
-    "parola": "Mare",
-    "infiltrato": ["Oceano", "Lago", "Piscina", "Fiume"]
-  },
-  {
-    "id": 6,
-    "parola": "Montagna",
-    "infiltrato": ["Collina", "Vulcano", "Scogliera", "Duna"]
-  },
-  {
-    "id": 7,
-    "parola": "Sole",
-    "infiltrato": ["Luna", "Stella", "Lampadina", "Fuoco"]
-  },
-  {
-    "id": 8,
-    "parola": "Aereo",
-    "infiltrato": ["Elicottero", "Drone", "Razzo", "Aquilone"]
-  },
-  {
-    "id": 9,
-    "parola": "Macchina",
-    "infiltrato": ["Camion", "Autobus", "Moto", "Taxi"]
-  },
-  {
-    "id": 10,
-    "parola": "Treno",
-    "infiltrato": ["Metro", "Tram", "Monorotaia", "Funivia"]
-  },
-  {
-    "id": 11,
-    "parola": "Bici",
-    "infiltrato": ["Monopattino", "Skateboard", "Pattini", "Scooter"]
-  },
-  {
-    "id": 12,
-    "parola": "Mela",
-    "infiltrato": ["Pera", "Pesca", "Arancia", "Pomodoro"]
-  },
-  {
-    "id": 13,
-    "parola": "Banana",
-    "infiltrato": ["Zucchina", "Melanzana", "Mais", "Cetriolo"]
-  },
-  {
-    "id": 14,
-    "parola": "Caffè",
-    "infiltrato": ["Tè", "Cioccolata", "Cappuccino", "Coca Cola"]
-  },
-  {
-    "id": 15,
-    "parola": "Acqua",
-    "infiltrato": ["Vino", "Birra", "Succo", "Ghiaccio"]
-  },
-  {
-    "id": 16,
-    "parola": "Gelato",
-    "infiltrato": ["Yogurt", "Ghiacciolo", "Granita", "Budino"]
-  },
-  {
-    "id": 17,
-    "parola": "Cioccolato",
-    "infiltrato": ["Caramella", "Zucchero", "Torta", "Biscotto"]
-  },
-  {
-    "id": 18,
-    "parola": "Chitarra",
-    "infiltrato": ["Violino", "Basso", "Ukulele", "Arpa"]
-  },
-  {
-    "id": 19,
-    "parola": "Pianoforte",
-    "infiltrato": ["Tastiera", "Organo", "Fisarmonica", "Xilofono"]
-  },
-  {
-    "id": 20,
-    "parola": "Calcio",
-    "infiltrato": ["Basket", "Pallavolo", "Rugby", "Tennis"]
-  },
-  {
-    "id": 21,
-    "parola": "Nuoto",
-    "infiltrato": ["Pallanuoto", "Tuffi", "Surf", "Bagno"]
-  },
-  {
-    "id": 22,
-    "parola": "Telefono",
-    "infiltrato": ["Tablet", "Computer", "Walkie Talkie", "Radio"]
-  },
-  {
-    "id": 23,
-    "parola": "Televisione",
-    "infiltrato": ["Cinema", "Teatro", "Proiettore", "Monitor"]
-  },
-  {
-    "id": 24,
-    "parola": "Orologio",
-    "infiltrato": ["Bussola", "Cronometro", "Sveglia", "Clessidra"]
-  },
-  {
-    "id": 25,
-    "parola": "Penna",
-    "infiltrato": ["Matita", "Pennarello", "Gesso", "Pennello"]
-  },
-  {
-    "id": 26,
-    "parola": "Libro",
-    "infiltrato": ["Giornale", "Rivista", "Quaderno", "Diario"]
-  },
-  {
-    "id": 27,
-    "parola": "Letto",
-    "infiltrato": ["Divano", "Amaca", "Sacco a pelo", "Poltrona"]
-  },
-  {
-    "id": 28,
-    "parola": "Sedia",
-    "infiltrato": ["Sgabello", "Panchina", "Trono", "Sedile"]
-  },
-  {
-    "id": 29,
-    "parola": "Scarpa",
-    "infiltrato": ["Ciabatta", "Stivale", "Calzino", "Sandalo"]
-  },
-  {
-    "id": 30,
-    "parola": "Maglietta",
-    "infiltrato": ["Camicia", "Felpa", "Giacca", "Canottiera"]
-  },
-  {
-    "id": 31,
-    "parola": "Occhiali",
-    "infiltrato": ["Lente", "Binocolo", "Maschera", "Microscopio"]
-  },
-  {
-    "id": 32,
-    "parola": "Cappello",
-    "infiltrato": ["Casco", "Corona", "Cuffia", "Parrucca"]
-  },
-  {
-    "id": 33,
-    "parola": "Dottore",
-    "infiltrato": ["Infermiere", "Veterinario", "Dentista", "Chirurgo"]
-  },
-  {
-    "id": 34,
-    "parola": "Poliziotto",
-    "infiltrato": ["Ladro", "Detective", "Guardia", "Soldato"]
-  },
-  {
-    "id": 35,
-    "parola": "Scuola",
-    "infiltrato": ["Università", "Biblioteca", "Asilo", "Ufficio"]
-  },
-  {
-    "id": 36,
-    "parola": "Casa",
-    "infiltrato": ["Hotel", "Castello", "Tenda", "Appartamento"]
-  },
-  {
-    "id": 37,
-    "parola": "Albero",
-    "infiltrato": ["Fiore", "Cespuglio", "Foresta", "Palma"]
-  },
-  {
-    "id": 38,
-    "parola": "Pioggia",
-    "infiltrato": ["Neve", "Grandine", "Temporale", "Doccia"]
-  },
-  {
-    "id": 39,
-    "parola": "Fantasma",
-    "infiltrato": ["Zombie", "Vampiro", "Scheletro", "Mostro"]
-  },
-  {
-    "id": 40,
-    "parola": "Spada",
-    "infiltrato": ["Coltello", "Ascia", "Lancia", "Pugnale"]
-  },
-  {
-    "id": 41,
-    "parola": "Fuoco",
-    "infiltrato": ["Fumo", "Cenere", "Lava", "Esplosione"]
-  },
-  {
-    "id": 42,
-    "parola": "Oro",
-    "infiltrato": ["Argento", "Bronzo", "Diamante", "Soldi"]
-  },
-  {
-    "id": 43,
-    "parola": "Re",
-    "infiltrato": ["Regina", "Principe", "Presidente", "Capo"]
-  },
-  {
-    "id": 44,
-    "parola": "Angelo",
-    "infiltrato": ["Diavolo", "Dio", "Fantasma", "Uccello"]
-  },
-  {
-    "id": 45,
-    "parola": "Specchio",
-    "infiltrato": ["Vetro", "Finestra", "Acqua", "Foto"]
-  },
-  {
-    "id": 46,
-    "parola": "Chiave",
-    "infiltrato": ["Lucchetto", "Password", "Porta", "Carta"]
-  },
-  {
-    "id": 47,
-    "parola": "Forchetta",
-    "infiltrato": ["Cucchiaio", "Coltello", "Bacchette", "Mano"]
-  },
-  {
-    "id": 48,
-    "parola": "Bicchiere",
-    "infiltrato": ["Tazza", "Bottiglia", "Lattina", "Vaso"]
-  },
-  {
-    "id": 49,
-    "parola": "Facebook",
-    "infiltrato": ["Instagram", "TikTok", "Twitter", "WhatsApp"]
-  },
-  {
-    "id": 50,
-    "parola": "Batman",
-    "infiltrato": ["Superman", "Spiderman", "Joker", "Robin"]
-  }
+  { "id": 1, "parola": "Cane", "infiltrato": ["Lupo", "Volpe", "Iena", "Coyote"] },
+  { "id": 2, "parola": "Gatto", "infiltrato": ["Tigre", "Leone", "Pantera", "Ghepardo"] },
+  { "id": 3, "parola": "Pizza", "infiltrato": ["Focaccia", "Calzone", "Piadina", "Pane"] },
+  { "id": 4, "parola": "Pasta", "infiltrato": ["Riso", "Gnocchi", "Ravioli", "Lasagna"] },
+  { "id": 5, "parola": "Mare", "infiltrato": ["Oceano", "Lago", "Piscina", "Fiume"] },
+  { "id": 6, "parola": "Montagna", "infiltrato": ["Collina", "Vulcano", "Scogliera", "Duna"] },
+  { "id": 7, "parola": "Sole", "infiltrato": ["Luna", "Stella", "Lampadina", "Fuoco"] },
+  { "id": 8, "parola": "Aereo", "infiltrato": ["Elicottero", "Drone", "Razzo", "Aquilone"] },
+  { "id": 9, "parola": "Macchina", "infiltrato": ["Camion", "Autobus", "Moto", "Taxi"] },
+  { "id": 10, "parola": "Treno", "infiltrato": ["Metro", "Tram", "Monorotaia", "Funivia"] },
+  { "id": 11, "parola": "Bici", "infiltrato": ["Monopattino", "Skateboard", "Pattini", "Scooter"] },
+  { "id": 12, "parola": "Mela", "infiltrato": ["Pera", "Pesca", "Arancia", "Pomodoro"] },
+  { "id": 13, "parola": "Banana", "infiltrato": ["Zucchina", "Melanzana", "Mais", "Cetriolo"] },
+  { "id": 14, "parola": "Caffè", "infiltrato": ["Tè", "Cioccolata", "Cappuccino", "Coca Cola"] },
+  { "id": 15, "parola": "Acqua", "infiltrato": ["Vino", "Birra", "Succo", "Ghiaccio"] },
+  { "id": 16, "parola": "Gelato", "infiltrato": ["Yogurt", "Ghiacciolo", "Granita", "Budino"] },
+  { "id": 17, "parola": "Cioccolato", "infiltrato": ["Caramella", "Zucchero", "Torta", "Biscotto"] },
+  { "id": 18, "parola": "Chitarra", "infiltrato": ["Violino", "Basso", "Ukulele", "Arpa"] },
+  { "id": 19, "parola": "Pianoforte", "infiltrato": ["Tastiera", "Organo", "Fisarmonica", "Xilofono"] },
+  { "id": 20, "parola": "Calcio", "infiltrato": ["Basket", "Pallavolo", "Rugby", "Tennis"] },
+  { "id": 21, "parola": "Nuoto", "infiltrato": ["Pallanuoto", "Tuffi", "Surf", "Bagno"] },
+  { "id": 22, "parola": "Telefono", "infiltrato": ["Tablet", "Computer", "Walkie Talkie", "Radio"] },
+  { "id": 23, "parola": "Televisione", "infiltrato": ["Cinema", "Teatro", "Proiettore", "Monitor"] },
+  { "id": 24, "parola": "Orologio", "infiltrato": ["Bussola", "Cronometro", "Sveglia", "Clessidra"] },
+  { "id": 25, "parola": "Penna", "infiltrato": ["Matita", "Pennarello", "Gesso", "Pennello"] },
+  { "id": 26, "parola": "Libro", "infiltrato": ["Giornale", "Rivista", "Quaderno", "Diario"] },
+  { "id": 27, "parola": "Letto", "infiltrato": ["Divano", "Amaca", "Sacco a pelo", "Poltrona"] },
+  { "id": 28, "parola": "Sedia", "infiltrato": ["Sgabello", "Panchina", "Trono", "Sedile"] },
+  { "id": 29, "parola": "Scarpa", "infiltrato": ["Ciabatta", "Stivale", "Calzino", "Sandalo"] },
+  { "id": 30, "parola": "Maglietta", "infiltrato": ["Camicia", "Felpa", "Giacca", "Canottiera"] },
+  { "id": 31, "parola": "Occhiali", "infiltrato": ["Lente", "Binocolo", "Maschera", "Microscopio"] },
+  { "id": 32, "parola": "Cappello", "infiltrato": ["Casco", "Corona", "Cuffia", "Parrucca"] },
+  { "id": 33, "parola": "Dottore", "infiltrato": ["Infermiere", "Veterinario", "Dentista", "Chirurgo"] },
+  { "id": 34, "parola": "Poliziotto", "infiltrato": ["Ladro", "Detective", "Guardia", "Soldato"] },
+  { "id": 35, "parola": "Scuola", "infiltrato": ["Università", "Biblioteca", "Asilo", "Ufficio"] },
+  { "id": 36, "parola": "Casa", "infiltrato": ["Hotel", "Castello", "Tenda", "Appartamento"] },
+  { "id": 37, "parola": "Albero", "infiltrato": ["Fiore", "Cespuglio", "Foresta", "Palma"] },
+  { "id": 38, "parola": "Pioggia", "infiltrato": ["Neve", "Grandine", "Temporale", "Doccia"] },
+  { "id": 39, "parola": "Fantasma", "infiltrato": ["Zombie", "Vampiro", "Scheletro", "Mostro"] },
+  { "id": 40, "parola": "Spada", "infiltrato": ["Coltello", "Ascia", "Lancia", "Pugnale"] },
+  { "id": 41, "parola": "Fuoco", "infiltrato": ["Fumo", "Cenere", "Lava", "Esplosione"] },
+  { "id": 42, "parola": "Oro", "infiltrato": ["Argento", "Bronzo", "Diamante", "Soldi"] },
+  { "id": 43, "parola": "Re", "infiltrato": ["Regina", "Principe", "Presidente", "Capo"] },
+  { "id": 44, "parola": "Angelo", "infiltrato": ["Diavolo", "Dio", "Fantasma", "Uccello"] },
+  { "id": 45, "parola": "Specchio", "infiltrato": ["Vetro", "Finestra", "Acqua", "Foto"] },
+  { "id": 46, "parola": "Chiave", "infiltrato": ["Lucchetto", "Password", "Porta", "Carta"] },
+  { "id": 47, "parola": "Forchetta", "infiltrato": ["Cucchiaio", "Coltello", "Bacchette", "Mano"] },
+  { "id": 48, "parola": "Bicchiere", "infiltrato": ["Tazza", "Bottiglia", "Lattina", "Vaso"] },
+  { "id": 49, "parola": "Facebook", "infiltrato": ["Instagram", "TikTok", "Twitter", "WhatsApp"] },
+  { "id": 50, "parola": "Batman", "infiltrato": ["Superman", "Spiderman", "Joker", "Robin"] },
+  { "id": 51, "parola": "Nutella", "infiltrato": ["Cioccolata", "Marmellata", "Miele", "Burro d'arachidi"] },
+  { "id": 52, "parola": "Sushi", "infiltrato": ["Riso", "Pesce", "Sashimi", "Cinese"] },
+  { "id": 53, "parola": "Harry Potter", "infiltrato": ["Voldemort", "Mago", "Gandalf", "Bacchetta"] },
+  { "id": 54, "parola": "Super Mario", "infiltrato": ["Luigi", "Sonic", "Peach", "Yoshi"] },
+  { "id": 55, "parola": "Pigiama", "infiltrato": ["Tuta", "Vestaglia", "Coperta", "Mutande"] },
+  { "id": 56, "parola": "Bacio", "infiltrato": ["Abbraccio", "Carezza", "Schiaffo", "Saluto"] },
+  { "id": 57, "parola": "Amore", "infiltrato": ["Amicizia", "Matrimonio", "Odio", "Fidanzato"] },
+  { "id": 58, "parola": "Youtube", "infiltrato": ["Twitch", "Netflix", "TikTok", "Cinema"] },
+  { "id": 59, "parola": "Doccia", "infiltrato": ["Vasca", "Lavandino", "Pioggia", "Sauna"] },
+  { "id": 60, "parola": "Cuscino", "infiltrato": ["Coperta", "Materasso", "Peluche", "Divano"] },
+  { "id": 61, "parola": "Nonno", "infiltrato": ["Papà", "Zio", "Vecchio", "Bastone"] },
+  { "id": 62, "parola": "Suocera", "infiltrato": ["Mamma", "Strega", "Nonna", "Zia"] },
+  { "id": 63, "parola": "Unicorno", "infiltrato": ["Cavallo", "Asino", "Pegaso", "Arcobaleno"] },
+  { "id": 64, "parola": "Sirena", "infiltrato": ["Pesce", "Squalo", "Donna", "Nuotatrice"] },
+  { "id": 65, "parola": "Pikachu", "infiltrato": ["Pokemon", "Charizard", "Topo", "Elettricità"] },
+  { "id": 66, "parola": "Spongebob", "infiltrato": ["Patrick", "Spugna", "Mare", "Squidward"] },
+  { "id": 67, "parola": "Gabinetto", "infiltrato": ["Bidet", "Lavandino", "Sedia", "Fogna"] },
+  { "id": 68, "parola": "Carta Igienica", "infiltrato": ["Fazzoletto", "Scottex", "Tovagliolo", "Giornale"] },
+  { "id": 69, "parola": "Puzza", "infiltrato": ["Profumo", "Odore", "Spazzatura", "Gas"] },
+  { "id": 70, "parola": "Barbie", "infiltrato": ["Bambola", "Bratz", "Ken", "Giocattolo"] },
+  { "id": 71, "parola": "Lego", "infiltrato": ["Mattoncini", "Puzzle", "Costruzioni", "Minecraft"] },
+  { "id": 72, "parola": "Minecraft", "infiltrato": ["Roblox", "Fortnite", "Lego", "Cubo"] },
+  { "id": 73, "parola": "Fortnite", "infiltrato": ["Call of Duty", "Minecraft", "Guerra", "Ballo"] },
+  { "id": 74, "parola": "Dieta", "infiltrato": ["Digiuno", "Sport", "Insalata", "Bilancia"] },
+  { "id": 75, "parola": "Palestra", "infiltrato": ["Stadio", "Parco", "Divano", "Pesi"] },
+  { "id": 76, "parola": "Uovo", "infiltrato": ["Gallina", "Frittata", "Pulcino", "Sasso"] },
+  { "id": 77, "parola": "Latte", "infiltrato": ["Yogurt", "Formaggio", "Panna", "Acqua"] },
+  { "id": 78, "parola": "Patatine Fritte", "infiltrato": ["Purè", "Pop Corn", "Patate", "Ketchup"] },
+  { "id": 79, "parola": "Ketchup", "infiltrato": ["Maionese", "Senape", "Pomodoro", "Salsa"] },
+  { "id": 80, "parola": "Hamburger", "infiltrato": ["Hot Dog", "Panino", "Polpetta", "Bistecca"] },
+  { "id": 81, "parola": "Dentifricio", "infiltrato": ["Sapone", "Crema", "Spazzolino", "Menta"] },
+  { "id": 82, "parola": "Spazzolino", "infiltrato": ["Pettine", "Scopa", "Dente", "Bastoncino"] },
+  { "id": 83, "parola": "Shampoo", "infiltrato": ["Bagnoschiuma", "Sapone", "Balsamo", "Schiuma"] },
+  { "id": 84, "parola": "Pettine", "infiltrato": ["Spazzola", "Forchetta", "Capelli", "Forbici"] },
+  { "id": 85, "parola": "Barba", "infiltrato": ["Baffi", "Capelli", "Pelo", "Rasoio"] },
+  { "id": 86, "parola": "Rasoio", "infiltrato": ["Coltello", "Forbici", "Depilazione", "Lama"] },
+  { "id": 87, "parola": "Trucco", "infiltrato": ["Rossetto", "Maschera", "Crema", "Smalto"] },
+  { "id": 88, "parola": "Smalto", "infiltrato": ["Vernice", "Unie", "Trucco", "Pennarello"] },
+  { "id": 89, "parola": "Tatuaggio", "infiltrato": ["Disegno", "Piercing", "Cicatrice", "Adesivo"] },
+  { "id": 90, "parola": "Piercing", "infiltrato": ["Orecchino", "Spilla", "Ago", "Anello"] },
+  { "id": 91, "parola": "Orecchino", "infiltrato": ["Collana", "Bracciale", "Anello", "Diamante"] },
+  { "id": 92, "parola": "Anello", "infiltrato": ["Fede", "Cerchio", "Dito", "Gioiello"] },
+  { "id": 93, "parola": "Collana", "infiltrato": ["Cravatta", "Sciarpa", "Catena", "Guinzaglio"] },
+  { "id": 94, "parola": "Cravatta", "infiltrato": ["Papillon", "Sciarpa", "Camicia", "Laccio"] },
+  { "id": 95, "parola": "Cintura", "infiltrato": ["Bretelle", "Corda", "Pantaloni", "Frusta"] },
+  { "id": 96, "parola": "Mutande", "infiltrato": ["Costume", "Pannolino", "Calzini", "Reggiseno"] },
+  { "id": 97, "parola": "Calzini", "infiltrato": ["Guanti", "Scarpe", "Piedi", "Collant"] },
+  { "id": 98, "parola": "Guanti", "infiltrato": ["Mani", "Calzini", "Presine", "Manette"] },
+  { "id": 99, "parola": "Sciarpa", "infiltrato": ["Cravatta", "Collana", "Cappello", "Coperta"] },
+  { "id": 100, "parola": "Ombrello", "infiltrato": ["Impermeabile", "Tetto", "Fungo", "Bastone"] },
+  { "id": 101, "parola": "Valigia", "infiltrato": ["Zaino", "Borsa", "Scatola", "Armadio"] },
+  { "id": 102, "parola": "Zaino", "infiltrato": ["Cartella", "Sacco", "Marsupio", "Schiena"] },
+  { "id": 103, "parola": "Portafoglio", "infiltrato": ["Tasca", "Borsa", "Salvadanaio", "Soldi"] },
+  { "id": 104, "parola": "Soldi", "infiltrato": ["Monete", "Carta", "Oro", "Bancomat"] },
+  { "id": 105, "parola": "Bancomat", "infiltrato": ["Banca", "Soldi", "Carta", "Cassa"] },
+  { "id": 106, "parola": "Scontrino", "infiltrato": ["Biglietto", "Carta", "Lista", "Prezzo"] },
+  { "id": 107, "parola": "Prezzo", "infiltrato": ["Numero", "Etichetta", "Sconto", "Costo"] },
+  { "id": 108, "parola": "Regalo", "infiltrato": ["Pacco", "Sorpresa", "Fiocco", "Auguri"] },
+  { "id": 109, "parola": "Torta", "infiltrato": ["Pasticcino", "Candeline", "Festa", "Pane"] },
+  { "id": 110, "parola": "Candeline", "infiltrato": ["Fuoco", "Cera", "Torcia", "Fiammiferi"] },
+  { "id": 111, "parola": "Fiammifero", "infiltrato": ["Accendino", "Bastoncino", "Fuoco", "Legno"] },
+  { "id": 112, "parola": "Accendino", "infiltrato": ["Fiammifero", "Gas", "Fiamma", "Scintilla"] },
+  { "id": 113, "parola": "Sigaretta", "infiltrato": ["Sigaro", "Fumo", "Pipa", "Vape"] },
+  { "id": 114, "parola": "Vino", "infiltrato": ["Uva", "Birra", "Champagne", "Aceto"] },
+  { "id": 115, "parola": "Birra", "infiltrato": ["Coca Cola", "Vino", "Schiuma", "Grano"] },
+  { "id": 116, "parola": "Uva", "infiltrato": ["Mirtillo", "Oliva", "Vino", "Ciliegia"] },
+  { "id": 117, "parola": "Fragola", "infiltrato": ["Lampone", "Ciliegia", "Rosso", "Panna"] },
+  { "id": 118, "parola": "Limone", "infiltrato": ["Arancia", "Giallo", "Aspro", "Lime"] },
+  { "id": 119, "parola": "Arancia", "infiltrato": ["Mandarino", "Pompelmo", "Succo", "Palla"] },
+  { "id": 120, "parola": "Anguria", "infiltrato": ["Melone", "Zucca", "Palla", "Verde"] },
+  { "id": 121, "parola": "Melone", "infiltrato": ["Anguria", "Prosciutto", "Zucca", "Palla"] },
+  { "id": 122, "parola": "Prosciutto", "infiltrato": ["Salame", "Maiale", "Melone", "Carne"] },
+  { "id": 123, "parola": "Formaggio", "infiltrato": ["Latte", "Burro", "Mozzarella", "Topo"] },
+  { "id": 124, "parola": "Mozzarella", "infiltrato": ["Formaggio", "Pizza", "Latte", "Palla"] },
+  { "id": 125, "parola": "Pomodoro", "infiltrato": ["Ketchup", "Sugo", "Rosso", "Mela"] },
+  { "id": 126, "parola": "Insalata", "infiltrato": ["Erba", "Verdura", "Spinaci", "Dieta"] },
+  { "id": 127, "parola": "Carota", "infiltrato": ["Arancione", "Coniglio", "Zucchina", "Naso"] },
+  { "id": 128, "parola": "Coniglio", "infiltrato": ["Lepre", "Orecchie", "Criceto", "Carota"] },
+  { "id": 129, "parola": "Topo", "infiltrato": ["Ratto", "Criceto", "Formaggio", "Computer"] },
+  { "id": 130, "parola": "Pipistrello", "infiltrato": ["Uccello", "Vampiro", "Notte", "Batman"] },
+  { "id": 131, "parola": "Ragno", "infiltrato": ["Insetto", "Ragnatela", "Spiderman", "Formica"] },
+  { "id": 132, "parola": "Ragnatela", "infiltrato": ["Rete", "Filo", "Seta", "Trappola"] },
+  { "id": 133, "parola": "Mosca", "infiltrato": ["Zanzara", "Ape", "Insetto", "Aereo"] },
+  { "id": 134, "parola": "Zanzara", "infiltrato": ["Mosca", "Vampiro", "Sangue", "Puntura"] },
+  { "id": 135, "parola": "Ape", "infiltrato": ["Vespa", "Miele", "Fiore", "Giallo"] },
+  { "id": 136, "parola": "Miele", "infiltrato": ["Zucchero", "Orso", "Marmellata", "Ape"] },
+  { "id": 137, "parola": "Orso", "infiltrato": ["Pelliccia", "Miele", "Letargo", "Cane"] },
+  { "id": 138, "parola": "Panda", "infiltrato": ["Orso", "Bianco e Nero", "Bambù", "Cina"] },
+  { "id": 139, "parola": "Bambù", "infiltrato": ["Canna", "Albero", "Erba", "Bastone"] },
+  { "id": 140, "parola": "Foresta", "infiltrato": ["Giungla", "Parco", "Alberi", "Bosco"] },
+  { "id": 141, "parola": "Deserto", "infiltrato": ["Spiaggia", "Sabbia", "Cammello", "Sole"] },
+  { "id": 142, "parola": "Cammello", "infiltrato": ["Dromedario", "Cavallo", "Deserto", "Gobba"] },
+  { "id": 143, "parola": "Elefante", "infiltrato": ["Ippopotamo", "Proboscide", "Orecchie", "Mammut"] },
+  { "id": 144, "parola": "Giraffa", "infiltrato": ["Collo", "Zebra", "Albero", "Macchie"] },
+  { "id": 145, "parola": "Zebra", "infiltrato": ["Cavallo", "Strisce", "Bianco e Nero", "Asino"] },
+  { "id": 146, "parola": "Cavallo", "infiltrato": ["Asino", "Unicorno", "Pony", "Cavaliere"] },
+  { "id": 147, "parola": "Mucca", "infiltrato": ["Toro", "Latte", "Fattoria", "Erba"] },
+  { "id": 148, "parola": "Maiale", "infiltrato": ["Cinghiale", "Rosa", "Prosciutto", "Fango"] },
+  { "id": 149, "parola": "Gallina", "infiltrato": ["Gallo", "Pollo", "Uovo", "Tacchino"] },
+  { "id": 150, "parola": "Pollo", "infiltrato": ["Gallina", "Carne", "Arrosto", "Uccello"] },
+  { "id": 151, "parola": "Pinguino", "infiltrato": ["Ghiaccio", "Frac", "Uccello", "Polo Sud"] },
+  { "id": 152, "parola": "Ghiaccio", "infiltrato": ["Acqua", "Neve", "Freddo", "Vetro"] },
+  { "id": 153, "parola": "Neve", "infiltrato": ["Pioggia", "Bianco", "Freddo", "Natale"] },
+  { "id": 154, "parola": "Natale", "infiltrato": ["Pasqua", "Compleanno", "Regali", "Albero"] },
+  { "id": 155, "parola": "Babbo Natale", "infiltrato": ["Nonno", "Barba", "Regali", "Rosso"] },
+  { "id": 156, "parola": "Befana", "infiltrato": ["Strega", "Scopa", "Carbone", "Vecchia"] },
+  { "id": 157, "parola": "Carbone", "infiltrato": ["Sasso", "Nero", "Fuoco", "Regalo"] },
+  { "id": 158, "parola": "Pasqua", "infiltrato": ["Natale", "Uovo", "Coniglio", "Festa"] },
+  { "id": 159, "parola": "Halloween", "infiltrato": ["Carnevale", "Zucca", "Mostro", "Paura"] },
+  { "id": 160, "parola": "Zucca", "infiltrato": ["Melone", "Arancione", "Carrozza", "Halloween"] },
+  { "id": 161, "parola": "Cenerentola", "infiltrato": ["Principessa", "Scarpa", "Mezzanotte", "Zucca"] },
+  { "id": 162, "parola": "Biancaneve", "infiltrato": ["Principessa", "Mela", "Nani", "Strega"] },
+  { "id": 163, "parola": "Nano", "infiltrato": ["Gigante", "Basso", "Gnomo", "Elfo"] },
+  { "id": 164, "parola": "Gigante", "infiltrato": ["Nano", "Alto", "Mostro", "Grande"] },
+  { "id": 165, "parola": "Drago", "infiltrato": ["Dinosauro", "Lucertola", "Fuoco", "Mostro"] },
+  { "id": 166, "parola": "Dinosauro", "infiltrato": ["Drago", "Lucertola", "Fossile", "T-Rex"] },
+  { "id": 167, "parola": "Alieno", "infiltrato": ["Umano", "UFO", "Marziano", "Mostro"] },
+  { "id": 168, "parola": "Astronauta", "infiltrato": ["Alieno", "Spazio", "Casco", "Luna"] },
+  { "id": 169, "parola": "Spazio", "infiltrato": ["Cielo", "Stelle", "Vuoto", "Universo"] },
+  { "id": 170, "parola": "Stella", "infiltrato": ["Sole", "Luna", "Cielo", "Luce"] },
+  { "id": 171, "parola": "Luna", "infiltrato": ["Sole", "Formaggio", "Notte", "Palla"] },
+  { "id": 172, "parola": "Notte", "infiltrato": ["Giorno", "Buio", "Sonno", "Luna"] },
+  { "id": 173, "parola": "Giorno", "infiltrato": ["Notte", "Sole", "Luce", "Mattina"] },
+  { "id": 174, "parola": "Luce", "infiltrato": ["Buio", "Lampada", "Sole", "Interruttore"] },
+  { "id": 175, "parola": "Buio", "infiltrato": ["Luce", "Notte", "Paura", "Nero"] },
+  { "id": 176, "parola": "Ombra", "infiltrato": ["Fantasma", "Buio", "Riflesso", "Silouette"] },
+  { "id": 177, "parola": "Colori", "infiltrato": ["Matite", "Arcobaleno", "Pittura", "Pennarelli"] },
+  { "id": 178, "parola": "Arcobaleno", "infiltrato": ["Pioggia", "Colori", "Cielo", "Ponte"] },
+  { "id": 179, "parola": "Tesoro", "infiltrato": ["Oro", "Soldi", "Pirata", "Scrigno"] },
+  { "id": 180, "parola": "Pirata", "infiltrato": ["Marinaio", "Nave", "Tesoro", "Benda"] },
+  { "id": 181, "parola": "Nave", "infiltrato": ["Barca", "Mare", "Traghetto", "Pirata"] },
+  { "id": 182, "parola": "Ancora", "infiltrato": ["Gancio", "Ferro", "Nave", "Mare"] },
+  { "id": 183, "parola": "Isola", "infiltrato": ["Mare", "Terra", "Palma", "Spiaggia"] },
+  { "id": 184, "parola": "Vulcano", "infiltrato": ["Montagna", "Lava", "Fuoco", "Esplosione"] },
+  { "id": 185, "parola": "Terremoto", "infiltrato": ["Tsunami", "Tremore", "Disastro", "Crepa"] },
+  { "id": 186, "parola": "Tornado", "infiltrato": ["Vento", "Uragano", "Vortice", "Tempesta"] },
+  { "id": 187, "parola": "Vento", "infiltrato": ["Aria", "Soffio", "Tornado", "Ventilatore"] },
+  { "id": 188, "parola": "Ventilatore", "infiltrato": ["Elica", "Vento", "Aria", "Condizionatore"] },
+  { "id": 189, "parola": "Condizionatore", "infiltrato": ["Freddo", "Ventilatore", "Caldo", "Aria"] },
+  { "id": 190, "parola": "Frigorifero", "infiltrato": ["Freezer", "Cibo", "Armadio", "Freddo"] },
+  { "id": 191, "parola": "Forno", "infiltrato": ["Microonde", "Fuoco", "Cucina", "Caldo"] },
+  { "id": 192, "parola": "Microonde", "infiltrato": ["Forno", "Riscaldare", "Cucina", "TV"] },
+  { "id": 193, "parola": "Lavatrice", "infiltrato": ["Asciugatrice", "Lavastoviglie", "Vestiti", "Acqua"] },
+  { "id": 194, "parola": "Lavastoviglie", "infiltrato": ["Lavatrice", "Piatti", "Lavandino", "Cucina"] },
+  { "id": 195, "parola": "Piatti", "infiltrato": ["Bicchieri", "Cibo", "Ceramica", "Frisbee"] },
+  { "id": 196, "parola": "Coltello", "infiltrato": ["Forchetta", "Spada", "Tagliare", "Lama"] },
+  { "id": 197, "parola": "Tagliere", "infiltrato": ["Legno", "Coltello", "Cucina", "Tavola"] },
+  { "id": 198, "parola": "Tavolo", "infiltrato": ["Sedia", "Scrivania", "Legno", "Banco"] },
+  { "id": 199, "parola": "Divano", "infiltrato": ["Poltrona", "Letto", "Cuscino", "Salotto"] },
+  { "id": 200, "parola": "Tappeto", "infiltrato": ["Pavimento", "Zerbin", "Coperta", "Aladdin"] },
+  { "id": 201, "parola": "Pavimento", "infiltrato": ["Soffitto", "Terra", "Tappeto", "Parquet"] },
+  { "id": 202, "parola": "Soffitto", "infiltrato": ["Pavimento", "Tetto", "Lampadario", "Cielo"] },
+  { "id": 203, "parola": "Muro", "infiltrato": ["Parete", "Mattoni", "Casa", "Ostacolo"] },
+  { "id": 204, "parola": "Finestra", "infiltrato": ["Porta", "Vetro", "Tenda", "Balcone"] },
+  { "id": 205, "parola": "Porta", "infiltrato": ["Finestra", "Chiave", "Uscita", "Entrata"] },
+  { "id": 206, "parola": "Ascensore", "infiltrato": ["Scale", "Salita", "Scatola", "Bottoni"] },
+  { "id": 207, "parola": "Scale", "infiltrato": ["Ascensore", "Gradini", "Salita", "Scala a chiocciola"] },
+  { "id": 208, "parola": "Balcone", "infiltrato": ["Finestra", "Terrazzo", "Giardino", "Fuori"] },
+  { "id": 209, "parola": "Giardino", "infiltrato": ["Parco", "Erba", "Fiori", "Cortile"] },
+  { "id": 210, "parola": "Piscina", "infiltrato": ["Mare", "Vasca", "Acqua", "Nuoto"] }
 ]

@@ -49,26 +49,36 @@
 
         #tag_modalita { font-size: 14px; text-transform: uppercase; letter-spacing: 1px; margin-top: -10px; margin-bottom: 20px; color: #888; font-weight: bold; }
 
+        /* STILI PER IL COUNTDOWN */
+        #overlay_countdown {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: black;
+            color: white;
+            display: none; /* Nascosto di default */
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+        #numero_countdown {
+            font-size: 150px;
+            font-weight: 900;
+            animation: zoomIn 0.5s ease-out;
+        }
+        @keyframes zoomIn { from { transform: scale(0); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
         #menu_classica, #menu_modalita, #schermata_crea, #menu_unisciti, #schermata_gioco { display: none; }
         #schermata_principale { display: block; }
     </style>
     <link rel="manifest" href="/manifest.json">
-<script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/service-worker.js')
-        .then(registration => {
-          console.log('ServiceWorker registered: ', registration);
-        })
-        .catch(registrationError => {
-          console.log('ServiceWorker registration failed: ', registrationError);
-        });
-    });
-  }
-</script>
 </head>
 <body>
     
+    <div id="overlay_countdown">
+        <div id="numero_countdown">3</div>
+    </div>
+
     <h1 id="main_title">Trova l'Impostore</h1>
     
     <div id="schermata_principale">
@@ -107,7 +117,7 @@
         <ul id="lista_giocatori"></ul>
         <div style="height: 20px;"></div>
         <button id="btn_inizia" onclick="iniziaPartita()" class="start-btn">INIZIA PARTITA</button>
-        <button onclick="esciDallaLobby()" class="neutral">Annulla</button>
+        <button onclick="esciDallaLobby()" class="neutral">Esci dalla Lobby</button>
     </div>
     
     <div id="menu_unisciti">
@@ -115,7 +125,7 @@
         <div class="input-group">
             <input type="text" id="codice_input" placeholder="ABCD" maxlength="4">
         </div>
-        <button onclick="uniscitiAllaLobby()" class="primary">ENTRA</button>
+        <button id="btn_entra" onclick="uniscitiAllaLobby()" class="primary">ENTRA</button>
         <button onclick="tornaAlMenuPrecedente()" class="neutral">Indietro</button>
     </div>
 
@@ -128,7 +138,7 @@
         </div>
         <br><br>
         <button id="btn_gioca_ancora" onclick="resetLobby()" class="play-again-btn" style="display:none;">Gioca Ancora</button>
-        <button onclick="location.reload()" style="background: rgba(255,255,255,0.2); border: 1px solid white; color: white;">Esci dalla Lobby</button>
+        <button onclick="esciDallaLobby()" style="background: rgba(255,255,255,0.2); border: 1px solid white; color: white;">Esci dalla Lobby</button>
     </div>
     
     <script src="/socket.io/socket.io.js"></script> 
@@ -136,10 +146,12 @@
         const socket = io(); 
         let codiceLobbyAttuale = "";
         let isHost = false; 
-        let modalitaSelezionata = 'classica'; // Variabile per ricordare la scelta
+        let modalitaSelezionata = 'classica'; 
 
         function mostraSchermata(id) {
-            document.querySelectorAll('body > div').forEach(div => div.style.display = 'none');
+            document.querySelectorAll('body > div').forEach(div => {
+                if(div.id !== 'overlay_countdown') div.style.display = 'none';
+            });
             document.getElementById(id).style.display = 'block';
             const titolo = document.getElementById('main_title');
             if (id === 'schermata_gioco') { titolo.style.display = 'none'; } 
@@ -149,19 +161,17 @@
         function aggiornaLista(nomi) {
             const lista = document.getElementById('lista_giocatori');
             lista.innerHTML = '';
-            nomi.forEach(nome => {
-                lista.innerHTML += `<li><span style="margin-right:10px;">👤</span> ${nome}</li>`;
+            nomi.forEach((nome, index) => {
+                const icona = index === 0 ? '👑' : '👤'; 
+                lista.innerHTML += `<li><span style="margin-right:10px;">${icona}</span> ${nome}</li>`;
             });
         }
 
-        // SALVA LA MODALITÀ QUANDO ENTRI NEL MENU
         function vaiAlMenuDiGioco(menuDestinazione, modalita) {
             const nomeInput = document.getElementById('input_nome').value.trim();
             if (nomeInput === "") { alert("Scrivi il tuo nome!"); return; }
-            
             socket.emit('imposta_nome', nomeInput);
-            
-            modalitaSelezionata = modalita; // Salva 'classica' o 'clash'
+            modalitaSelezionata = modalita; 
             mostraSchermata(menuDestinazione);
         }
         
@@ -179,7 +189,23 @@
             }
         }
         
-        function esciDallaLobby() { location.reload(); }
+        function esciDallaLobby() {
+            if (confirm("Vuoi davvero uscire?")) {
+                socket.emit('leave_lobby');
+                codiceLobbyAttuale = "";
+                isHost = false;
+                document.body.style.backgroundColor = '#ffffff';
+                mostraSchermata('schermata_principale');
+                document.getElementById('codice_input').value = "";
+                
+                document.getElementById('btn_gioca_ancora').style.display = 'none';
+                document.getElementById('box_inizia_tu').style.display = 'none';
+                document.getElementById('img_ruolo').style.display = 'none';
+                
+                // Riabilita il bottone entra
+                document.getElementById('btn_entra').disabled = false;
+            }
+        }
 
         socket.on('aggiorna_impostazioni', (dati) => {
             const box = document.getElementById('opzione_infiltrato');
@@ -187,8 +213,6 @@
             if (dati.infiltratoAbilitato) { box.classList.add('attivo'); status.innerText = '✅'; }
             else { box.classList.remove('attivo'); status.innerText = '❌'; }
         });
-
-        socket.on('benvenuto', () => {});
 
         function creaLobby(tipo) {
             mostraSchermata('schermata_crea'); 
@@ -202,8 +226,7 @@
                 isHost = dati.isHost; 
                 document.getElementById('codice_lobby').innerText = dati.codice;
                 document.getElementById('tag_modalita').innerText = "MODALITÀ: " + dati.modalita.toUpperCase();
-                document.getElementById('btn_inizia').style.display = isHost ? 'block' : 'none';
-                document.getElementById('opzione_infiltrato').style.display = isHost ? 'flex' : 'none';
+                aggiornaInterfacciaHost();
                 aggiornaLista(dati.listaNomi);
                 document.getElementById('opzione_infiltrato').classList.remove('attivo');
                 document.getElementById('stato_infiltrato').innerText = '❌';
@@ -211,13 +234,17 @@
         });
 
         function uniscitiAllaLobby() {
+            const btn = document.getElementById('btn_entra');
             const codice = document.getElementById('codice_input').value.toUpperCase();
+            
             if (codice.length === 4) { 
-                // INVIA ANCHE LA MODALITÀ CHE L'UTENTE SI ASPETTA
+                btn.disabled = true; // Previene doppio click!
                 socket.emit('join_lobby', { 
                     codice: codice,
                     modalitaRichiesta: modalitaSelezionata 
                 }); 
+                // Riabilita il bottone dopo 3 secondi in caso di errore
+                setTimeout(() => { btn.disabled = false; }, 3000);
             } 
             else { alert("Codice di 4 lettere richiesto"); }
         }
@@ -227,8 +254,7 @@
                 codiceLobbyAttuale = dati.codice;
                 isHost = dati.isHost; 
                 mostraSchermata('schermata_crea');
-                document.getElementById('btn_inizia').style.display = isHost ? 'block' : 'none'; 
-                document.getElementById('opzione_infiltrato').style.display = isHost ? 'flex' : 'none';
+                aggiornaInterfacciaHost();
                 document.getElementById('codice_lobby').innerText = dati.codice;
                 document.getElementById('tag_modalita').innerText = "MODALITÀ: " + dati.modalita.toUpperCase();
                 aggiornaLista(dati.listaNomi);
@@ -238,6 +264,7 @@
                 else { box.classList.remove('attivo'); status.innerText = '❌'; }
             } else {
                 alert(dati.messaggio);
+                document.getElementById('btn_entra').disabled = false;
             }
         });
 
@@ -245,21 +272,72 @@
             aggiornaLista(dati.listaNomi);
         });
 
+        socket.on('promozione_host', (dati) => {
+            if (dati.isHost) {
+                isHost = true;
+                alert("Il capo stanza è uscito. Ora sei tu l'HOST! 👑");
+                aggiornaInterfacciaHost();
+            }
+        });
+
+        function aggiornaInterfacciaHost() {
+            const btnInizia = document.getElementById('btn_inizia');
+            const opzioneInfiltrato = document.getElementById('opzione_infiltrato');
+            const btnGiocaAncora = document.getElementById('btn_gioca_ancora');
+
+            if (isHost) {
+                btnInizia.style.display = 'block';
+                opzioneInfiltrato.style.display = 'flex';
+                if (document.getElementById('schermata_gioco').style.display === 'block') {
+                    btnGiocaAncora.style.display = 'block';
+                }
+            } else {
+                btnInizia.style.display = 'none';
+                opzioneInfiltrato.style.display = 'none';
+                btnGiocaAncora.style.display = 'none';
+            }
+        }
+
         function iniziaPartita() {
             if(codiceLobbyAttuale) {
                 socket.emit('start_game', codiceLobbyAttuale);
             }
         }
         
+        // --- LOGICA COUNTDOWN ---
+        socket.on('avvia_countdown', () => {
+            const overlay = document.getElementById('overlay_countdown');
+            const numero = document.getElementById('numero_countdown');
+            
+            overlay.style.display = 'flex';
+            let count = 3;
+            numero.innerText = count;
+
+            const timer = setInterval(() => {
+                count--;
+                if(count > 0) {
+                    numero.innerText = count;
+                    // Reset animazione
+                    numero.style.animation = 'none';
+                    numero.offsetHeight; /* trigger reflow */
+                    numero.style.animation = 'zoomIn 0.5s ease-out';
+                } else {
+                    clearInterval(timer);
+                }
+            }, 1000);
+        });
+
         socket.on('errore', (dati) => { alert("Errore: " + dati.messaggio); });
 
         socket.on('partita_iniziata', (dati) => {
+            // Nascondi countdown
+            document.getElementById('overlay_countdown').style.display = 'none';
+
             mostraSchermata('schermata_gioco');
             const principale = document.getElementById('testo_principale');
             const secondario = document.getElementById('testo_secondario');
             const immagine = document.getElementById('img_ruolo');
             const boxInizia = document.getElementById('box_inizia_tu');
-            const btnGiocaAncora = document.getElementById('btn_gioca_ancora');
 
             principale.innerText = dati.testoPrincipale;
             secondario.innerText = dati.testoSecondario;
@@ -280,7 +358,7 @@
             if (dati.iniziaTu === true) { boxInizia.style.display = 'block'; } 
             else { boxInizia.style.display = 'none'; }
             
-            btnGiocaAncora.style.display = isHost ? 'block' : 'none';
+            aggiornaInterfacciaHost(); 
         });
         
         function resetLobby() {
@@ -294,10 +372,13 @@
             document.body.style.backgroundColor = '#ffffff';
             aggiornaLista(dati.listaNomi);
             document.getElementById('tag_modalita').innerText = "MODALITÀ: " + dati.modalita.toUpperCase();
+            
             const box = document.getElementById('opzione_infiltrato');
             const status = document.getElementById('stato_infiltrato');
             if(dati.infiltratoAbilitato) { box.classList.add('attivo'); status.innerText = '✅'; }
             else { box.classList.remove('attivo'); status.innerText = '❌'; }
+            
+            document.getElementById('box_inizia_tu').style.display = 'none';
         });
 
         document.addEventListener('DOMContentLoaded', () => {
